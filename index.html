@@ -197,6 +197,45 @@
     #bg { animation: none; }
     .bigheart { animation: none; }
   }
+
+  /* ===== Intro divertida (pantalla negra) ===== */
+  #gate {
+    position: fixed; inset: 0; z-index: 50;
+    background: radial-gradient(circle at 50% 40%, #140a22 0%, #000 70%);
+    transition: opacity .9s ease;
+  }
+  #gate.gone { opacity: 0; pointer-events: none; }
+  .gpanel {
+    position: absolute; inset: 0;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 32px;
+  }
+  .gpanel.active { display: flex; animation: gfade .5s ease; }
+  @keyframes gfade { from { opacity: 0; } to { opacity: 1; } }
+
+  .gate-hint {
+    position: fixed; top: 12%; left: 0; right: 0;
+    font-size: .95rem; letter-spacing: .14em; text-transform: uppercase;
+    color: #ff9ecd; opacity: .55; animation: pulse 2s ease-in-out infinite;
+  }
+  #runBtn {
+    position: fixed; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px 32px; border: none; border-radius: 999px; cursor: pointer;
+    font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 600;
+    color: #4a0d33;
+    background: linear-gradient(120deg, var(--pink-2), var(--gold));
+    box-shadow: 0 10px 26px rgba(255,111,174,.5), inset 0 1px 0 rgba(255,255,255,.6);
+    transition: left .35s cubic-bezier(.34,1.56,.64,1), top .35s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+  }
+  .gq {
+    font-family: 'Dancing Script', cursive; font-weight: 700;
+    font-size: clamp(2rem, 8vw, 3.2rem); color: #fff; line-height: 1.15;
+    max-width: 620px; text-shadow: 0 4px 20px rgba(255,111,174,.35);
+  }
+  .gsub { margin-top: 14px; font-weight: 300; color: #ffd9f0; opacity: .8; }
 </style>
 </head>
 <body>
@@ -259,6 +298,19 @@
   <div class="dots" id="dots"></div>
   <div id="sound" title="Sonido">🔇</div>
   <canvas id="fx"></canvas>
+
+  <!-- Intro divertida: botón que huye -> pregunta -> entrar -->
+  <div id="gate">
+    <div class="gpanel active" id="gp1">
+      <div class="gate-hint">psst… toca el botón 👀</div>
+      <button id="runBtn">Toca aquí 👆</button>
+    </div>
+    <div class="gpanel" id="gp2">
+      <div class="gq">¿Segura que quieres<br/>saber qué hay acá? 👀</div>
+      <div class="gsub">No hay vuelta atrás… 😏</div>
+      <button class="btn" id="enterBtn">Sí, quiero 💗</button>
+    </div>
+  </div>
 
 <script>
 (function () {
@@ -514,6 +566,53 @@
       o.start(); o.stop(actx.currentTime + 0.5);
     } catch (e) {}
   }
+})();
+
+/* ===== Intro divertida: botón que huye ===== */
+(function () {
+  "use strict";
+  var gate = document.getElementById("gate");
+  var gp1 = document.getElementById("gp1");
+  var gp2 = document.getElementById("gp2");
+  var runBtn = document.getElementById("runBtn");
+  var enterBtn = document.getElementById("enterBtn");
+
+  var dodges = 0, MAX = 3;
+  var taunts = ["¡No me atrapas! 😜", "¡Uy, casi! 🙈", "Ok ok… ya, dale 👀"];
+
+  function moveAway() {
+    var pad = 90;
+    var w = window.innerWidth, h = window.innerHeight;
+    var x = pad + Math.random() * (w - pad * 2);
+    var y = pad + Math.random() * (h - pad * 2);
+    runBtn.style.left = x + "px";
+    runBtn.style.top = y + "px";
+  }
+
+  function dodge() {
+    if (dodges >= MAX) return;
+    moveAway();
+    runBtn.textContent = taunts[Math.min(dodges, taunts.length - 1)];
+    dodges++;
+    if (dodges >= MAX) {
+      setTimeout(function () { runBtn.textContent = "Entrar 👀"; }, 250);
+    }
+  }
+
+  // Escritorio: huye cuando el mouse se acerca
+  runBtn.addEventListener("mouseenter", function () { if (dodges < MAX) dodge(); });
+
+  // Móvil + clic: primeros toques la esquivan, el último entra
+  runBtn.addEventListener("pointerdown", function (e) {
+    if (dodges < MAX) { e.preventDefault(); dodge(); return; }
+    gp1.classList.remove("active");
+    gp2.classList.add("active");
+  });
+
+  enterBtn.addEventListener("pointerdown", function () {
+    gate.classList.add("gone");
+    setTimeout(function () { gate.remove(); }, 950);
+  });
 })();
 </script>
 </body>
