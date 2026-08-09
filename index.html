@@ -243,15 +243,13 @@
   <canvas id="hearts"></canvas>
 
   <div class="stage" id="stage">
-    <!-- Scene 0: Intro -->
+    <!-- Scene 0: Revelado -->
     <section class="scene active" data-scene="0">
       <div class="card">
         <div class="bigheart">💖</div>
-        <div class="kicker">Un lugar hecho para ti</div>
-        <h1>Hola, Ashly</h1>
-        <p class="lead">Preparé este pequeño rinconcito<br/>solo para decirte algunas cositas.</p>
-        <button class="btn" data-next>Empezar ✨</button>
-        <div class="tap-hint">Toca la pantalla y verás 💗</div>
+        <h1>Para ti, Ashly</h1>
+        <p class="lead">Respira… porque todo lo que sigue<br/>es para recordarte algo importante. 💗</p>
+        <button class="btn" data-next>Descúbrelo ✨</button>
       </div>
     </section>
 
@@ -407,6 +405,15 @@
       });
     }
   }
+
+  // Estallido de bienvenida al entrar (lo llama la intro)
+  window.__celebrate = function () {
+    var cx = W / 2, cy = H * 0.42, n = 0;
+    var t = setInterval(function () {
+      addBurst(cx + (Math.random() - 0.5) * 120, cy + (Math.random() - 0.5) * 120, 10);
+      if (++n > 12) clearInterval(t);
+    }, 55);
+  };
 
   var last = 0;
   function loop(ts) {
@@ -611,6 +618,9 @@
 
   enterBtn.addEventListener("pointerdown", function () {
     gate.classList.add("gone");
+    setTimeout(function () {
+      if (window.__celebrate) window.__celebrate();
+    }, 350);
     setTimeout(function () { gate.remove(); }, 950);
   });
 })();
