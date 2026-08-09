@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#1a0b2e" />
+<title>Para ti, Ashly 💖</title>
+<meta name="description" content="Un pequeño lugar hecho solo para ti." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --pink:   #ff6fae;
+    --pink-2: #ff9ecd;
+    --purple: #b06ab3;
+    --gold:   #ffd9a0;
+    --night:  #1a0b2e;
+    --night-2:#2d1155;
+    --text:   #fff2fb;
+    --glass:  rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.22);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--night);
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--text);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Animated dreamy background */
+  #bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,111,174,.35), transparent 45%),
+      radial-gradient(circle at 82% 25%, rgba(176,106,179,.40), transparent 50%),
+      radial-gradient(circle at 50% 100%, rgba(255,158,205,.30), transparent 55%),
+      linear-gradient(160deg, var(--night) 0%, var(--night-2) 55%, #3a1560 100%);
+    background-size: 200% 200%;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { background-position: 0% 0%; }
+    to   { background-position: 100% 100%; }
+  }
+
+  #hearts, #fx {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+  }
+  #fx { z-index: 6; }
+
+  /* Scenes */
+  .stage { position: fixed; inset: 0; z-index: 3; }
+  .scene {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 32px 24px;
+    opacity: 0; transform: scale(.96) translateY(14px);
+    pointer-events: none;
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .scene.active { opacity: 1; transform: none; pointer-events: auto; }
+
+  .card {
+    max-width: 560px; width: 100%;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-radius: 28px;
+    padding: 40px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  }
+
+  .kicker {
+    font-size: .8rem; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--pink-2); opacity: .9; margin-bottom: 14px; font-weight: 500;
+  }
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.8rem, 12vw, 4.6rem);
+    font-weight: 700; line-height: 1.05;
+    background: linear-gradient(120deg, #fff, var(--pink-2), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 4px 18px rgba(255,111,174,.4));
+  }
+  h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 700; margin-bottom: 8px; color: #fff;
+  }
+  p.lead {
+    font-size: clamp(1.02rem, 4.6vw, 1.18rem);
+    font-weight: 300; line-height: 1.75; color: var(--text);
+    opacity: .96;
+  }
+  .name {
+    font-family: 'Dancing Script', cursive; font-weight: 700;
+    color: var(--pink-2);
+  }
+  .tw { min-height: 3.2em; }
+  .tw .cursor {
+    display: inline-block; width: 2px; height: 1.1em;
+    background: var(--pink-2); margin-left: 3px;
+    transform: translateY(3px); animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Big pulsing heart */
+  .bigheart {
+    font-size: clamp(4rem, 22vw, 7rem); line-height: 1;
+    filter: drop-shadow(0 10px 30px rgba(255,111,174,.6));
+    animation: beat 1.4s ease-in-out infinite;
+    margin-bottom: 8px;
+  }
+  @keyframes beat {
+    0%,100% { transform: scale(1); }
+    14% { transform: scale(1.18); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.12); }
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    margin-top: 26px; padding: 15px 30px;
+    font-family: 'Poppins', sans-serif; font-size: 1.04rem; font-weight: 500;
+    color: #4a0d33; cursor: pointer; border: none; border-radius: 999px;
+    background: linear-gradient(120deg, var(--pink-2), var(--gold));
+    box-shadow: 0 10px 26px rgba(255,111,174,.5), inset 0 1px 0 rgba(255,255,255,.6);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:active { transform: scale(.95); }
+  .btn.ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--glass-border); box-shadow: none;
+    font-weight: 300; font-size: .92rem; padding: 11px 22px; margin-top: 16px;
+  }
+  .tap-hint {
+    margin-top: 22px; font-size: .82rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--pink-2); opacity: .7;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: .25; } }
+
+  /* piropo bubbles that float up on tap */
+  .piropo {
+    position: fixed; z-index: 7; pointer-events: none;
+    font-family: 'Dancing Script', cursive; font-weight: 700;
+    font-size: clamp(1.2rem, 5.5vw, 1.7rem);
+    color: #fff; white-space: nowrap;
+    text-shadow: 0 3px 14px rgba(255,111,174,.7);
+    transform: translate(-50%, -50%);
+    animation: floatUp 2.2s ease-out forwards;
+  }
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translate(-50%,-50%) scale(.6); }
+    16%  { opacity: 1; transform: translate(-50%,-70%) scale(1.06); }
+    100% { opacity: 0; transform: translate(-50%,-230%) scale(1); }
+  }
+
+  /* Progress dots */
+  .dots {
+    position: fixed; z-index: 5; bottom: 22px; left: 0; right: 0;
+    display: flex; gap: 9px; justify-content: center;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.25); transition: all .4s ease;
+  }
+  .dot.on { background: var(--pink-2); width: 22px; border-radius: 6px; }
+
+  /* Sound toggle */
+  #sound {
+    position: fixed; z-index: 8; top: 16px; right: 16px;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; cursor: pointer;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    font-size: 1.15rem; color: #fff;
+  }
+
+  .count {
+    margin-top: 18px; font-size: .85rem; color: var(--pink-2);
+    opacity: .8; font-weight: 300; min-height: 1.2em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #bg { animation: none; }
+    .bigheart { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div id="bg"></div>
+  <canvas id="hearts"></canvas>
+
+  <div class="stage" id="stage">
+    <!-- Scene 0: Intro -->
+    <section class="scene active" data-scene="0">
+      <div class="card">
+        <div class="bigheart">💖</div>
+        <div class="kicker">Un lugar hecho para ti</div>
+        <h1>Hola, Ashly</h1>
+        <p class="lead">Preparé este pequeño rinconcito<br/>solo para decirte algunas cositas.</p>
+        <button class="btn" data-next>Empezar ✨</button>
+        <div class="tap-hint">Toca la pantalla y verás 💗</div>
+      </div>
+    </section>
+
+    <!-- Scene 1: Typewriter -->
+    <section class="scene" data-scene="1">
+      <div class="card">
+        <div class="kicker">Lo primero que quiero decirte</div>
+        <p class="lead tw" id="tw1"></p>
+        <button class="btn" data-next>Sigue 💫</button>
+      </div>
+    </section>
+
+    <!-- Scene 2: Interactive piropos -->
+    <section class="scene" data-scene="2">
+      <div class="card">
+        <h2>Eres preciosa</h2>
+        <p class="lead">Toca el corazón las veces que quieras…<br/>cada toque es algo que pienso de ti.</p>
+        <button class="btn" id="piropoBtn">Tócame 💗</button>
+        <div class="count" id="piropoCount"></div>
+        <button class="btn ghost" data-next>Continuar →</button>
+      </div>
+    </section>
+
+    <!-- Scene 3: Proud -->
+    <section class="scene" data-scene="3">
+      <div class="card">
+        <div class="kicker">Y algo que me nace del alma</div>
+        <p class="lead tw" id="tw2"></p>
+        <button class="btn" data-next>Una cosita más 💖</button>
+      </div>
+    </section>
+
+    <!-- Scene 4: Finale -->
+    <section class="scene" data-scene="4">
+      <div class="card">
+        <div class="bigheart">💝</div>
+        <h1>Gracias por existir</h1>
+        <p class="lead">Nunca dudes de lo hermosa que eres,<br/>por dentro y por fuera, <span class="name">Ashly</span>.<br/>Estoy muy orgulloso/a de ti. 🌷</p>
+        <button class="btn" id="replay">Verlo otra vez 🔁</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="dots" id="dots"></div>
+  <div id="sound" title="Sonido">🔇</div>
+  <canvas id="fx"></canvas>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Personaliza aquí ---------- */
+  var NOMBRE = "Ashly";
+
+  var PIROPOS = [
+    "Qué hermosa eres 💗",
+    "Tu sonrisa lo ilumina todo ✨",
+    "Eres única en el mundo 🌎",
+    "Me encanta cómo eres 🥰",
+    "Tienes una luz preciosa 🌟",
+    "Eres fuerte y valiente 💪",
+    "Tu corazón es enorme ❤️",
+    "Eres inteligente y capaz 🧠",
+    "Contigo todo es mejor 🌸",
+    "Qué orgullo verte crecer 🌱",
+    "Nunca dejes de brillar ⭐",
+    "Eres suficiente, siempre 💖",
+    "Tu mirada es un poema 👀",
+    "Mereces todo lo bonito 🌷",
+    "Eres mi persona favorita 💕"
+  ];
+
+  var TW1 = "Cada vez que te veo pienso en lo afortunad@ que soy de conocerte. Eres de esas personas que hacen que el día valga la pena.";
+  var TW2 = "Verte esforzarte, no rendirte y seguir adelante me llena de orgullo. Admiro tu forma de ser más de lo que las palabras alcanzan a decir.";
+  /* -------------------------------------- */
+
+  // Set name everywhere
+  document.title = "Para ti, " + NOMBRE + " 💖";
+
+  var TAU = Math.PI * 2;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ===== Floating hearts background ===== */
+  var hc = document.getElementById("hearts"), hx = hc.getContext("2d");
+  var fc = document.getElementById("fx"), fx = fc.getContext("2d");
+  var W, H, DPR;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    [hc, fc].forEach(function (c) {
+      c.width = W * DPR; c.height = H * DPR;
+      c.style.width = W + "px"; c.style.height = H + "px";
+      c.getContext("2d").setTransform(DPR, 0, 0, DPR, 0, 0);
+    });
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  function heartPath(ctx, x, y, s) {
+    ctx.beginPath();
+    var t;
+    for (t = 0; t <= TAU; t += 0.18) {
+      var px = 16 * Math.pow(Math.sin(t), 3);
+      var py = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+      var vx = x + (px / 16) * s;
+      var vy = y - (py / 16) * s;
+      if (t === 0) ctx.moveTo(vx, vy); else ctx.lineTo(vx, vy);
+    }
+    ctx.closePath();
+  }
+
+  var COLORS = ["#ff6fae", "#ff9ecd", "#ffd9a0", "#ffb3d9", "#c98bff"];
+  var bg = [];
+  for (var i = 0; i < 26; i++) bg.push(newBgHeart(true));
+  function newBgHeart(init) {
+    return {
+      x: Math.random() * W,
+      y: init ? Math.random() * H : H + 30,
+      s: 8 + Math.random() * 16,
+      sp: 0.25 + Math.random() * 0.7,
+      sway: Math.random() * TAU,
+      swaySp: 0.4 + Math.random() * 0.8,
+      a: 0.15 + Math.random() * 0.4,
+      c: COLORS[(Math.random() * COLORS.length) | 0]
+    };
+  }
+
+  var burst = []; // tap particles
+  function addBurst(x, y, n) {
+    for (var i = 0; i < n; i++) {
+      var ang = Math.random() * TAU, sp = 1.6 + Math.random() * 3.4;
+      burst.push({
+        x: x, y: y,
+        vx: Math.cos(ang) * sp,
+        vy: Math.sin(ang) * sp - 1.4,
+        s: 8 + Math.random() * 14,
+        life: 1, dec: 0.010 + Math.random() * 0.012,
+        rot: Math.random() * TAU, vr: (Math.random() - 0.5) * 0.2,
+        c: COLORS[(Math.random() * COLORS.length) | 0]
+      });
+    }
+  }
+
+  var last = 0;
+  function loop(ts) {
+    var dt = Math.min((ts - last) / 16.67 || 1, 3); last = ts;
+
+    hx.clearRect(0, 0, W, H);
+    for (var i = 0; i < bg.length; i++) {
+      var b = bg[i];
+      b.y -= b.sp * dt;
+      b.sway += b.swaySp * 0.02 * dt;
+      var x = b.x + Math.sin(b.sway) * 16;
+      hx.globalAlpha = b.a; hx.fillStyle = b.c;
+      heartPath(hx, x, b.y, b.s); hx.fill();
+      if (b.y < -30) bg[i] = newBgHeart(false);
+    }
+    hx.globalAlpha = 1;
+
+    fx.clearRect(0, 0, W, H);
+    for (var j = burst.length - 1; j >= 0; j--) {
+      var p = burst[j];
+      p.vy += 0.06 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+      p.rot += p.vr * dt; p.life -= p.dec * dt;
+      if (p.life <= 0) { burst.splice(j, 1); continue; }
+      fx.save();
+      fx.globalAlpha = Math.max(p.life, 0);
+      fx.translate(p.x, p.y); fx.rotate(p.rot);
+      fx.fillStyle = p.c;
+      heartPath(fx, 0, 0, p.s); fx.fill();
+      fx.restore();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* ===== Tap anywhere -> hearts + piropo ===== */
+  var pIdx = 0;
+  function shuffled() { return PIROPOS.slice().sort(function () { return Math.random() - 0.5; }); }
+  var deck = shuffled();
+
+  function nextPiropo() {
+    if (pIdx >= deck.length) { deck = shuffled(); pIdx = 0; }
+    return deck[pIdx++];
+  }
+
+  function floatText(x, y, text) {
+    var el = document.createElement("div");
+    el.className = "piropo";
+    el.textContent = text;
+    el.style.left = Math.max(90, Math.min(W - 90, x)) + "px";
+    el.style.top = y + "px";
+    document.body.appendChild(el);
+    setTimeout(function () { el.remove(); }, 2300);
+  }
+
+  function tap(x, y, withText) {
+    addBurst(x, y, 12);
+    beep();
+    if (withText) floatText(x, y, nextPiropo());
+  }
+
+  document.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(".btn") || e.target.closest("#sound")) {
+      addBurst(e.clientX, e.clientY, 8); beep(); return;
+    }
+    tap(e.clientX, e.clientY, true);
+  });
+
+  /* ===== Scene navigation ===== */
+  var scenes = Array.prototype.slice.call(document.querySelectorAll(".scene"));
+  var cur = 0;
+  var dotsWrap = document.getElementById("dots");
+  scenes.forEach(function () {
+    var d = document.createElement("div"); d.className = "dot"; dotsWrap.appendChild(d);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.children);
+
+  function show(n) {
+    scenes[cur].classList.remove("active");
+    cur = n;
+    scenes[cur].classList.add("active");
+    dots.forEach(function (d, i) { d.classList.toggle("on", i === cur); });
+    if (cur === 1) typewriter(document.getElementById("tw1"), TW1);
+    if (cur === 3) typewriter(document.getElementById("tw2"), TW2);
+    if (cur === 4) finale();
+  }
+  show(0);
+
+  document.querySelectorAll("[data-next]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (cur < scenes.length - 1) show(cur + 1);
+    });
+  });
+  document.getElementById("replay").addEventListener("click", function () { show(0); });
+
+  /* piropo button in scene 2 */
+  var taps = 0;
+  var countEl = document.getElementById("piropoCount");
+  document.getElementById("piropoBtn").addEventListener("click", function (e) {
+    taps++;
+    var r = e.target.getBoundingClientRect();
+    floatText(r.left + r.width / 2, r.top, nextPiropo());
+    addBurst(r.left + r.width / 2, r.top + r.height / 2, 14);
+    beep();
+    countEl.textContent = taps === 1 ? "1 cosita que pienso de ti 💭"
+      : taps + " cositas… y me faltan muchas más 💗";
+  });
+
+  /* ===== Typewriter ===== */
+  var twTimer = null;
+  function typewriter(el, text) {
+    if (twTimer) clearInterval(twTimer);
+    el.innerHTML = "";
+    var span = document.createElement("span"); el.appendChild(span);
+    var cur = document.createElement("span"); cur.className = "cursor"; el.appendChild(cur);
+    var i = 0;
+    twTimer = setInterval(function () {
+      span.textContent = text.slice(0, ++i);
+      if (i >= text.length) { clearInterval(twTimer); }
+    }, reduce ? 4 : 34);
+  }
+
+  /* ===== Finale heart rain ===== */
+  function finale() {
+    var n = 0;
+    var t = setInterval(function () {
+      addBurst(Math.random() * W, -10, 4);
+      // reuse burst but push downward
+      var p = burst[burst.length - 1];
+      if (p) { p.vy = 1 + Math.random() * 2; p.vx = (Math.random() - .5) * 1.2; p.dec = 0.004; }
+      if (++n > 40) clearInterval(t);
+    }, 90);
+  }
+
+  /* ===== Gentle sound (WebAudio, optional) ===== */
+  var AC = window.AudioContext || window.webkitAudioContext;
+  var actx = null, soundOn = false;
+  var soundBtn = document.getElementById("sound");
+  var notes = [523.25, 587.33, 659.25, 783.99, 880.0]; // C5 D5 E5 G5 A5
+
+  soundBtn.addEventListener("click", function () {
+    soundOn = !soundOn;
+    soundBtn.textContent = soundOn ? "🔊" : "🔇";
+    if (soundOn && !actx) { try { actx = new AC(); } catch (e) { actx = null; } }
+    if (soundOn && actx && actx.state === "suspended") actx.resume();
+  });
+
+  function beep() {
+    if (!soundOn || !actx) return;
+    try {
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = "sine";
+      o.frequency.value = notes[(Math.random() * notes.length) | 0];
+      g.gain.setValueAtTime(0.0001, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.12, actx.currentTime + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.5);
+      o.connect(g); g.connect(actx.destination);
+      o.start(); o.stop(actx.currentTime + 0.5);
+    } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
